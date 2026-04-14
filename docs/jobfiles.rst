@@ -411,10 +411,7 @@ data acquired with PRIAM or MRSI.
 Data handling and modeling options
 ----------------------------------
 
-In this section of the job file, you provide information on whether you
-would like to save the processed data in externally usable file formats
-(for example, if you want to interface your analysis with LCModel), and
-specify options for the modeling.
+In this section of the job file, you provide information on whether you would like to save the processed data in externally usable file formats (for example, if you want to interface your analysis with LCModel), and specify options for the modeling.
 
 Spectral registration options
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -423,12 +420,7 @@ The ``opts.SpecReg`` option allows the specification of the desired
 spectral registration method.
 
 By setting ``opts.SpecReg`` to ``RobSpecReg``, alignment is performed
-with lipid/water removal using simialrity meric, and weighted averaging.
-By setting ``opts.SpecReg`` to ``ProbSpecReg``, Probabilistic spectral
-alignment is performed, registering to a median target with weighted
-averaging. By setting ``opts.SpecReg`` to ``RestrSpecReg``, Spectral
-alignment using similarity metric and weighted average over a restricted
-fit range.
+with lipid/water removal using simialrity meric, and weighted averaging. By setting ``opts.SpecReg`` to ``ProbSpecReg``, Probabilistic spectral alignment is performed, registering to a median target with weighted averaging. By setting ``opts.SpecReg`` to ``RestrSpecReg``, spectral alignment using similarity metric and weighted average is performed over a restricted fit range. By setting ``opts.SpecReg`` to ``none``, no spectral registration is performed. This may help in cases where severe out-of-voxel artefacts interfere with the spectral registration process, but is not recommended in general.
 
 .. code-block:: matlab
 
@@ -437,13 +429,21 @@ fit range.
                                                 %             - 'RestrSpecReg' Frequency restricted (fit range) spectral aligment, using similarity metric, and weighted averaging
                                                 %             - 'none'
 
+When setting ``opts.SpecReg`` to ``RestrSpecReg``, the range for frequency-restricted spectral registration can be provided separately with the ``opts.SpecRegRange`` variable, which includes two values (lower and upper bounds). If this variable is not provided, the fit range specified in ``opts.fit.range`` will be used for the frequency-restricted spectral registration.
+
+If you choose to use this frequency-restricted spectral registration, make sure that the fit range you specify includes sufficient signal for robust alignment. 
+
+.. code-block:: matlab
+
+  % Example of providing a range for frequency-restricted spectral registration 
+  opts.SpecRegRange = [1.3 3.3];                  % [ppm] 
+
 Sub-spectral alignment
 ~~~~~~~~~~~~~~~~~~~~~~
 
 ``opts.SubSpecAlignment`` allows specification of the metric used to
-optimize sub-spectral alignment. ``L2Norm`` is the default, with
-``L1Norm`` as an alternative option. Choosing ``none`` will circumvent
-sub-spectral alignment altogether.
+optimize sub-spectral alignment for spectral-editing experiments (MEGA-PRESS, HERMES, HERCULES, etc.). ``L2Norm`` is the default, with
+``L1Norm`` as an alternative option. Choosing ``none`` will circumvent sub-spectral alignment altogether.
 
 .. code-block:: matlab
 

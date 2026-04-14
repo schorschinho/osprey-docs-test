@@ -99,10 +99,10 @@ NIfTIMRS
 
 If the job file option ``opts.saveNII`` is set to ``1`` (by default, this is set to ``0``), this folder will be created and will contain processed spectra in NIfTI-MRS format (.nii.gz), which can be used for further analysis in other software packages that support NIfTI-MRS files (e.g., FSL-MRS, spant, etc.). There is no explicit additional NIfTI-specific suffix for these files.
 
-SDATFiles
-~~~~~~~~~
+SDATFiles or RDAFiles
+~~~~~~~~~~~~~~~~~~~~~
 
-If the job file option ``opts.saveSDAT`` is set to ``1`` (by default, this is set to ``0``), this folder will be created and will contain processed spectra in Philips SDAT/SPAR format (.SDAT./.SPAR), which can be used for further analysis in other software packages that support Philips SDAT/SPAR files. There is no explicit additional SDAT-specific suffix for these files.
+If the job file option ``opts.saveVendor`` is set to ``1`` (by default, this is set to ``0``), this folder will be created and will contain processed spectra in Philips SDAT/SPAR (.SDAT./.SPAR) or Siemens RDA (.RDA) formats, which can be used for further analysis in other software packages that support those files. There is no explicit additional SDAT- or RDA-specific suffix for these files.
 
 QuantifyResults
 ---------------
