@@ -34,14 +34,6 @@ Developers
 -  `Christopher W. Davies-Jenkins <mailto:cdavies9@jhu.edu>`__
 -  `Richard A. E. Edden <mailto:raee2@jhu.edu>`__
 
-Should you publish material that made use of Osprey, please cite the
-following publication:
-
-`G Oeltzschner, HJ Zöllner, SCN Hui, M Mikkelsen, MG Saleh, S Tapper,
-RAE Edden. Osprey: Open-Source Processing, Reconstruction & Estimation
-of Magnetic Resonance Spectroscopy Data. J Neurosci Meth 343:108827
-(2020). <https://doi.org/10.1016/j.jneumeth.2020.108827>`__
-
 Acknowledgements
 ----------------
 
@@ -54,9 +46,9 @@ sets and control files. If you use these resources for your analysis of
 the following data types, please mention the respective individuals in
 your acknowledgements:
 
--  Siemens 7T STEAM (TE = 5 ms): Dr. Dinesh Deelchand (University of
+-  Siemens 7T STEAM (TE = 5 ms): Dr. Dinesh Deelchand (University of
    Minnesota)
--  Siemens 3T and 7T SPECIAL (TE = 8.5/9 ms): Dr. Ariane Fillmer (PTB
+-  Siemens 3T and 7T SPECIAL (TE = 8.5/9 ms): Dr. Ariane Fillmer (PTB
    Berlin)
 
 We also wish to thank the following individuals for their contributions
@@ -77,23 +69,29 @@ Micah Allen, Davide Poggiali, Kirstie Whitaker, Tom Rhys Marshall, and
 Rogier Kievit. Should you make use of the OspreyOverview raincloud
 plots, please consider citing their original publications:
 
-   -  Allen M, Poggiali D, Whitaker K et al. Raincloud plots: a
-      multi-platform tool for robust data visualization [version 1; peer
-      review: 2 approved]. Wellcome Open Res 2019, 4:63. DOI:
+   -  Allen M, Poggiali D, Whitaker K et al. Raincloud plots: a
+      multi-platform tool for robust data visualization [version 1; peer review: 2 approved]. Wellcome Open Res 2019, 4:63. DOI:
       10.12688/wellcomeopenres.15191.1
    -  Allen M, Poggiali D, Whitaker K, Marshall TR, Kievit R. (2018)
       RainCloudPlots tutorials and codebase (Version v1.1). Zenodo.
       http://doi.org/10.5281/zenodo.3368186
-.. toctree::
-   :maxdepth: 2
-   :caption: Contents
 
-   00-FAQ
-   01-gettingstarted
-   02-workflow
-   03-jobfiles
-   04-tutorial
-   05-tutorial_cmd
-   06-helpers
+
+Table of Contents
+-----------------
+
+.. toctree::
+   :maxdepth: 1
+   :numbered:
+   
+   howtocite
+   gettingstarted
+   workflow
+   jobfiles
+   tutorial
+   tutorial_cmd
+   outputs
+   helpers
+   FAQ
 
 

@@ -5,9 +5,16 @@ System requirements
 -------------------
 
 **Osprey** requires
-`MATLAB <https://www.mathworks.com/products/matlab.html>`__ and has been
-tested on version 2017a and newer (2019a and newer is required for the
-GUI). The following toolboxes are required for full functionality:
+`MATLAB <https://www.mathworks.com/products/matlab.html>`__ version 2019a and newer for full functionality.
+
+.. warning::
+
+   MATLAB has substantially re-built its GUI functions starting with version 2026a. 
+   We have not yet tested Osprey with the new GUI functions. We have received reports of errors and warning occurring in these situations,
+   and cannot currently guarantee that Osprey will work properly with MATLAB 2026a and later.
+
+
+The following toolboxes are required for full functionality:
 
 -  Optimization
 -  Statistics and Machine Learning
@@ -20,31 +27,28 @@ GUI). The following toolboxes are required for full functionality:
 You can check your current MATLAB version and the available toolboxes
 with the following command at the MATLAB prompt:
 
+::
 
+   > ver
 
-> ver
-
-
-
-----------------------------------------------------------------------------------------------------
-   MATLAB Version: 9.4.0.949201 (R2018a) Update 6
-   MATLAB License Number: 703789
-   Operating System: Mac OS X  Version: 10.14.6 Build: 18G4032
-   Java Version: Java 1.8.0_144-b01 with Oracle Corporation Java HotSpot(TM) 64-Bit Server VM mixed mode
    -----------------------------------------------------------------------------------------------------
-   MATLAB                                                Version 9.4         (R2018a)
-   Curve Fitting Toolbox                                 Version 3.5.7       (R2018a)
-   GUI Layout Toolbox                                    Version 2.3.4       (R2018b)
-   Global Optimization Toolbox                           Version 3.4.4       (R2018a)
-   Image Processing Toolbox                              Version 10.2        (R2018a)
-   Neural Network Toolbox                                Version 11.1        (R2018a)
-   Optimization Toolbox                                  Version 8.1         (R2018a)
-   Parallel Computing Toolbox                            Version 6.12        (R2018a)
-   Signal Processing Toolbox                             Version 8.0         (R2018a)
-   Statistics and Machine Learning Toolbox               Version 11.3        (R2018a)
-   Symbolic Math Toolbox                                 Version 8.1         (R2018a)
-   Wavelet Toolbox                                       Version 5.0         (R2018a)
-   Widgets Toolbox                                       Version 1.3.330     (R2019a)
+   MATLAB Version: 9.12.0.2170939 (R2022a) Update 6
+   MATLAB License Number: 703789
+   Operating System: Microsoft Windows 11 Enterprise Version 10.0 (Build 26100)
+   Java Version: Java 1.8.0_202-b08 with Oracle Corporation Java HotSpot(TM) 64-Bit Server VM mixed mode
+   -----------------------------------------------------------------------------------------------------
+   MATLAB                                                Version 9.12        (R2022a)
+   Curve Fitting Toolbox                                 Version 3.7         (R2022a)
+   GUI Layout Toolbox                                    Version 2.3.6       (R2023a)
+   Global Optimization Toolbox                           Version 4.7         (R2022a)
+   Image Processing Toolbox                              Version 11.5        (R2022a)
+   MATLAB Compiler                                       Version 8.4         (R2022a)
+   MATLAB Compiler SDK                                   Version 7.0         (R2022a)
+   Optimization Toolbox                                  Version 9.3         (R2022a)
+   Parallel Computing Toolbox                            Version 7.6         (R2022a)
+   Signal Processing Toolbox                             Version 9.0         (R2022a)
+   Statistics and Machine Learning Toolbox               Version 12.3        (R2022a)
+   Widgets Toolbox - Compatibility Support               Version 1.5.1       (R2023a)
 
 .. note::
 
