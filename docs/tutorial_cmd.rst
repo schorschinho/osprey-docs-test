@@ -6,75 +6,70 @@ be called directly using a series of commands in the Matlab terminal.
 The function RunOspreyJob.m is a one-stop-shop wrapper for all of these
 commands, running the full analysis without interruption:
 
+.. code-block:: matlab
 
-
-RSCont = RunOspreyJob('Path/To/Job/File');
+   MRSCont = RunOspreyJob('Path/To/Job/File');
 
 It may be preferable to view your analysis at each step by calling each
 command in turn. After setting up the job file, either as a Matlab .m
 file, .json, or .csv, the **Osprey** job is initialized as follows:
 
+.. code-block:: matlab
 
-
-RSCont = OspreyJob('Path/To/Job/File');
+   MRSCont = OspreyJob('Path/To/Job/File');
 
 MRSCont will now contain the options and file locations for your data,
 as specified in the job file. Next, the data can be loaded:
 
+.. code-block:: matlab
 
-
-RSCont = OspreyLoad(MRSCont);
+   MRSCont = OspreyLoad(MRSCont);
 
 The substructure, MRSCont.raw, now contains the raw MRS data, as
 extracted from their native format. We may now preprocess these data:
 
+.. code-block:: matlab
 
-
-RSCont = OspreyProcess(MRSCont);
+   MRSCont = OspreyProcess(MRSCont);
 
 The MRSCont.processed will now contain the processed data, as well as
-some quality control measures in MRSCont.QM for your inspection. If all
-is well, we may now fit the data:
+some quality control measures in MRSCont.QM for your inspection. If all is well, we may now fit the data:
 
+.. code-block:: matlab
 
-
-RSCont = OspreyFit(MRSCont);
+   MRSCont = OspreyFit(MRSCont);
 
 Modeling results are added to the MRSCont.fit, including results tables.
+
 If we have structural data, we can coregister our voxels, and perform
 tissue segmentation:
 
+.. code-block:: matlab
 
-
-RSCont = OspreyCoreg(MRSCont);
+   MRSCont = OspreyCoreg(MRSCont);
    MRSCont = OspreySeg(MRSCont);
 
 MRSCont now has sub-structures relating to voxel masks and volumes,
 MRSCont.coreg, and tissue segmentation results in MRSCont.seg.
 
-Whether we had structural images or not, we may now quantify our spectra
-to produce some numerical results:
+Whether we had structural images or not, we may now quantify our spectra to produce some numerical results:
 
+.. code-block:: matlab
 
-
-RSCont = OspreyQuantify(MRSCont);
+   MRSCont = OspreyQuantify(MRSCont);
 
 Finally, we may run the OspreyOverview function:
 
+.. code-block:: matlab
 
+   MRSCont = OspreyOverview(MRSCont);
 
-RSCont = OspreyOverview(MRSCont);
+This final function adds group measures, if we have a stat.csv file, and performs some statistics necesary for some of the plotting functions and GUI windows.
 
-This final function adds group measures, if we have a stat.csv file, and
-performs some statistics necesary for some of the plotting functions and
-GUI windows.
+At any point during a command-line analysis, it is possible to visualize the data using the plot functions found in **Osprey/plot**, or even by switching to the GUI mid-analysis using:
 
-At any point during a command-line analysis, it is possible to visualize
-the data using the plot functions found in **Osprey/plot**, or even by
-switching to the GUI mid-analysis using:
+.. code-block:: matlab
 
-
-
-spreyGUI(MRSCont);
+   OspreyGUI(MRSCont);
 
 

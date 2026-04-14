@@ -22,7 +22,9 @@ datasets that are included in the ``exampledata/sdat/`` directory of the
 click on the dropdown arrow on the right to take a look through the
 file, and then read on for a detailed description of each job file item.
 
-Example job file ``jobSDAT.m``::
+Example job file ``jobSDAT.m``
+
+.. code-block:: matlab
 
   % jobSDAT.m
   %   This function describes an Osprey job defined in a MATLAB script.
@@ -367,7 +369,7 @@ required input in the form of a string.\ ``seqType`` determines whether
 the supplied datasets have been acquired with spectral editing
 experiments.
 
-::
+.. code-block:: matlab
 
   % Specify sequence type
     seqType = 'unedited';           % OPTIONS:    - 'unedited' (default)
@@ -383,7 +385,7 @@ required input in the form of a cell array. ``editTarget`` determines
 the target spin system(s) of spectral editing experiments. If no
 spectral editing has been performed, enter ``{'none'}``.
 
-::
+.. code-block:: matlab
 
   % Specify editing targets
     editTarget = {'none'};          % OPTIONS:    - {'none'} (default if 'unedited')
@@ -398,7 +400,7 @@ were acquired.For in-vivo single-voxel MRS, select ``invivo``. Further
 options are available for data acquired in a phantom, or multi-voxel
 data acquired with PRIAM or MRSI.
 
-::
+.. code-block:: matlab
 
   % Specify data scenario
     dataScenario = 'invivo';        % OPTIONS:    - 'invivo' (default)
@@ -428,12 +430,12 @@ averaging. By setting ``opts.SpecReg`` to ``RestrSpecReg``, Spectral
 alignment using similarity metric and weighted average over a restricted
 fit range.
 
+.. code-block:: matlab
 
-
-pts.SpecReg = 'RobSpecReg';                  % OPTIONS:    - 'RobSpecReg' (default) Spectral aligment with Water/Lipid removal, using simialrity meric, and weighted averaging
-                                                 %             - 'ProbSpecReg' Probabilistic spectral aligment to median target and weighted averaging
-                                                 %             - 'RestrSpecReg' Frequency restricted (fit range) spectral aligment, using simialrity meric, and weighted averaging
-                                                 %             - 'none'
+  opts.SpecReg = 'RobSpecReg';                  % OPTIONS:    - 'RobSpecReg' (default) Spectral aligment with Water/Lipid removal, using similarity metric, and weighted averaging
+                                                %             - 'ProbSpecReg' Probabilistic spectral aligment to median target and weighted averaging
+                                                %             - 'RestrSpecReg' Frequency restricted (fit range) spectral aligment, using similarity metric, and weighted averaging
+                                                %             - 'none'
 
 Sub-spectral alignment
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -443,11 +445,11 @@ optimize sub-spectral alignment. ``L2Norm`` is the default, with
 ``L1Norm`` as an alternative option. Choosing ``none`` will circumvent
 sub-spectral alignment altogether.
 
+.. code-block:: matlab
 
-
-pts.SubSpecAlignment.mets = 'L2Norm';          % OPTIONS:    - 'L2Norm' (default)
-                                                   %             - 'L1Norm'
-                                                   %             - 'none'
+  opts.SubSpecAlignment.mets = 'L2Norm';          % OPTIONS:    - 'L2Norm' (default)
+                                                  %             - 'L1Norm'
+                                                  %             - 'none'
 
 Eddy-current correction
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -460,7 +462,7 @@ spectra, respectively. ``opts.ECC.raw`` and ``opts.ECC.mm`` may be
 specified as 1 to apply ECC to all data, 0 to not apply ECC at all, or
 as a vector to apply ECC to a sub-set of the data.
 
-::
+.. code-block:: matlab
 
   % Perform eddy-current correction on the metabolite data (raw) or metabolite
   %-nulled data (mm). This can either be done similar for all data sets by
@@ -493,7 +495,7 @@ software.
 - By setting ``opts.savePDF`` to ``1``, PDF summaries are produced for
   all subjects after running each module.
 
-::
+.. code-block:: matlab
 
   % Save LCModel-exportable files for each spectrum?
   opts.saveLCM                = 1;                % OPTIONS:    - 0 (no, default)
@@ -573,7 +575,7 @@ metabolites listed below are included, but a subset may be specified as
 a cell array of strings:
 ``opts.fit.includeMetabs = {Cr, CrCH2, GABA, PCr,...}``
 
-::
+.. code-block:: matlab
 
   % Select the metabolites to be included in the basis set as a cell array,
   % with entries separates by commas.
@@ -594,7 +596,7 @@ automatic selction, or to specify an alternative.
 ``opts.fit.basisSetFile`` is a string specifying the path to the basis
 set stored in FID-A format.
 
-::
+.. code-block:: matlab
 
   % Optional: In case the automatic basisset picker is not working you can 
   % manually select the path to the basis set in the osprey/fit/basis, i.e.:
@@ -611,7 +613,7 @@ method, as described in the `publication <(https://doi.org/10.1016/j.jneumeth.20
 If ``LCModel`` is specified, Osprey will generate .RAW files of the processed spectra, populate minimal control files, and read the outputs back into the
 Matlab container.
 
-::
+.. code-block:: matlab
 
  % Choose the fitting algorithm
  opts.fit.method             = 'Osprey_gLCM';    % OPTIONS:    - 'Osprey_gLCM' (default)
@@ -625,7 +627,7 @@ If LCModel is used as a method, further options may be specified in the job file
 ``opts.fit.basisSetFile`` is a string specifying the path to a basis
 file.
 
-::
+.. code-block:: matlab
 
   %%% ----- LCMODEL FITTING OPTIONS -----
   % Specify LCModel-format basis set (.BASIS)
@@ -639,7 +641,7 @@ If you do not provide a control file template, Osprey will generate a minimal co
 
 Note that all parameters that pertain to water-scaled quantification (such as `ATTH2O`, `ATTMET`, `WCONC`, etc.) are automatically set by Osprey, and any values provided in the control file template will be overwritten by Osprey. This is to ensure that the water-scaled tissue- and relaxation-corrected quantification is entirely carried out in the subsequent Osprey analysis steps (OspreyCoreg, OspreySeg, OspreyQuant), and that the water reference data are correctly accounted for in the quantification.
 
-::
+.. code-block:: matlab
 
   % Specify LCModel-type control file (.CONTROL)
   % This is optional: If you leave this field blank, Osprey will create a
@@ -652,7 +654,7 @@ Note that the pre-compiled binaries are only compatible with certain operating s
 
 You can find a library of pre-compiled LCModel binaries for different operating systems at https://github.com/schorschinho/lcmodel, including instructions for how to compile LCModel on your own system if a compatible binary is not available. If you compile an LCModel binary for a system that is not listed in the library, please consider sharing it with the community by submitting a pull request to the repository.  
 
-::
+.. code-block:: matlab
 
   % Specify custom LCModel binary path
   % You can set the path to a custom-compiled LCModel binary here. If left
@@ -669,7 +671,8 @@ The ``opts.fit.range`` and ``opts.fit.rangeWater`` variables determine
 the fitting range (in ppm) of the metabolite and water spectra,
 respectively.
 
-::
+.. code-block:: matlab
+
  % Determine fitting range (in ppm) for the metabolite and water spectra
    opts.fit.range              = [0.5 4];          % [ppm] Default: [0.5 4]
    opts.fit.rangeWater         = [2.0 7.4];        % [ppm] Default: [2.0 7.4]
@@ -681,7 +684,7 @@ The ``opts.fit.GAP`` option specifies a range (in ppm) to be excluded
 from the fitting of specified sub-spectra. The input is a vector
 specifying the upper and lower bounds of the range.
 
-:: 
+.. code-block:: matlab
 
   % Specify the range (in ppm) to be excluded from the fitting
   opts.fit.GAP.A              = [];                % [ppm] Default: [] (no gap)
@@ -704,7 +707,7 @@ Higher values correspond to a stiffer baseline, while lower values will
 produce a larger number of spline knots, allowing for greater
 flexibility of the baseline.
 
-::
+.. code-block:: matlab
 
   % Determine the baseline knot spacing (in ppm) for the metabolite spectra
   opts.fit.bLineKnotSpace     = 0.4;              % [ppm] Default: 0.4.
@@ -729,7 +732,7 @@ use an experimentally measured MM/lipid basis function, or operate at
 long echo times where the MM and lipid resonances have decayed, you can
 set ``opts.fit.fitMM = 0`` to exclude them.
 
-::
+.. code-block:: matlab
 
  % Add macromolecule and lipid basis functions to the fit?
  opts.fit.fitMM              = 1;                % OPTIONS:    - 0 (no)
@@ -758,7 +761,7 @@ Gaussian basis function is optimized during the modeling process 7.
 ``none`` - uses no MM basis function for the co-edited 3.0-ppm MM in the
 difference spectrum.
 
-::
+.. code-block:: matlab
 
  % How do you want to model the co-edited macromolecules at 3 ppm for 
  % GABA-edited MRS?
@@ -773,7 +776,7 @@ difference spectrum.
 Defacing anatomical images
 --------------------------
 
-::
+.. code-block:: matlab
 
   % Optional: Deface the structural images in the Coreg/Seg figures for HIPAA
   % compliance 
@@ -816,7 +819,7 @@ Metabolite data
 The ``files`` variable is defined as a cell array of full paths to the
 raw MRS data files containing your metabolite (water-suppressed) data.
 
-::
+.. code-block:: matlab
 
  % Specify metabolite data
  % (MANDATORY)
@@ -831,7 +834,7 @@ raw MRS data files containing your metabolite (water-suppressed) data.
 
 When designing your own job file, it is strongly recommended to provide the full paths to your raw data, e.g.:
 
-::
+.. code-block:: matlab
 
  % Specify metabolite data
  % (MANDATORY)
@@ -867,7 +870,7 @@ These are an optional input, acquired with the same sequence as the
 metabolite data, but without water suppression, and used to perform
 eddy-current correction of the metabolite data.
 
-::
+.. code-block:: matlab
 
  % Specify water reference data for eddy-current correction (same sequence 
  % as metabolite data!)
@@ -892,7 +895,7 @@ for eddy-current correction). Using short-TE water as the concentration
 reference standard reduces T2-weighting of the water reference signal
 (and associated correction errors) compared to long-TE water data.
 
-::
+.. code-block:: matlab
 
  % Specify water data for quantification (e.g. short-TE water scan)
  % (OPTIONAL)
@@ -913,7 +916,7 @@ purposes.
 
   Do not use Philips-generated NIfTI files. If you structural imaging data have been acquired on a Philips scanner and exported in PAR/REC format, convert them to NIfTI format with dcm2niix, which can handle Philips PAR/REC files.
 
-::
+.. code-block:: matlab
 
  Specify T1-weighted structural imaging data
    % (OPTIONAL)
@@ -935,7 +938,7 @@ images, bypassing SPM12 segmentation. This is useful, if you are using a custom 
 
 As an example, Osprey has leveraged `BIBSnet segmentation <https://www.sciencedirect.com/science/article/pii/S1878929326000411>`__ for baby brains in the `HBCD study <https://hbcdstudy.org/>`__.
 
-::
+.. code-block:: matlab
 
   % External segmentation results
   % (OPTIONAL)
@@ -957,7 +960,7 @@ Specifying stat.csv file
 In this section of the job it is possible to specify the location of a
 csv file containing group variables, and possible correlation measures. This information will be used to group the data and perform correlation analyses in the OspreyQuant module. If no csv file is supplied, the data will be treated as one group, and no correlation analyses will be performed.
 
-::
+.. code-block:: matlab
 
   % Supply location of a csv file, which contains possible correlation
   % measures and group variables. Each column must start with the name of the
@@ -980,7 +983,7 @@ The ``outputFolder`` variable specifies a full path to the output folder.
 
 If the output folder does not exist yet, it will be created. Note that **Osprey** detects if the output folder already exists and contains data from a previous analysis. In this case, you will be prompted whether you would like to overwrite the existing output.
 
-::
+.. code-block:: matlab
 
  % Specify output folder
  % (MANDATORY)
