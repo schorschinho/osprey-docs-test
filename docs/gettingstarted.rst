@@ -27,7 +27,7 @@ The following toolboxes are required for full functionality:
 You can check your current MATLAB version and the available toolboxes
 with the following command at the MATLAB prompt:
 
-::
+.. code-block:: matlab
 
    > ver
 

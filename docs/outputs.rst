@@ -15,6 +15,7 @@ Depending on the options specified in the job file, Osprey generates a variety o
     └── LCModelFiles/
     └── NIfTIMRS/
     └── QuantifyResults/
+    └── RDAFiles/
     └── SDATFiles/
     └── SegMaps/
     └── VoxelMasks/
@@ -121,6 +122,8 @@ Furthermore, the ``SegMaps`` folder contains a BIDS-compliant TSV/JSON pair with
 VoxelMasks
 ----------
 
-The ``VoxelMasks`` folder is created when ``OspreyCoreg`` is executed. It contains binary masks representing the MRS voxel, which are generated based on the voxel coordinates and dimensions specified in the MRS file headers. These masks are used for co-registration, partial volume correction, and other processing steps that require knowledge of the voxel location and size.
+The ``VoxelMasks`` folder is created when ``OspreyCoreg`` is executed. It contains binary masks representing the MRS voxel, which are generated based on the voxel coordinates and dimensions specified in the MRS file headers. These masks are used for co-registration, partial volume correction, and other processing steps that require knowledge of the voxel location and size. They are given in scanner space, and therefore labeled with the suffix ``space-scanner_mask.nii.gz``.
+
+If the helper function ``osp_plotVoxelOverlap`` is called, Osprey will further generate the following output files in ``VoxelMasks``: 1) a NIfTI file for each individual subject containing the voxel mask in SPM152 space (with the suffix ``_space-spm152_mask.nii.gz``), and 2) the Dice-Sorensen coefficient map in SPM152 space (with the suffix ``_space-spm152_mask_VoxelOverlap.nii.gz``). 
 
 

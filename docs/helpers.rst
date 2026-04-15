@@ -1,5 +1,65 @@
-﻿Osprey basis set tools
-======================
+Helpful functions and tools
+===========================
+
+In addition to the main processing and fitting functions, **Osprey** includes a number of helper functions and tools that can be used for various purposes during the analysis of your MRS data. These include functions for generating basis sets, plotting basis functions, and other utilities that can assist you in the analysis of your MRS data.
+
+Heatmap plot of MRS voxel mask overlap
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The function `osp_plotVoxelOverlap <https://github.com/schorschinho/osprey/blob/develop/plot/osp_plotVoxelOverlap.m>`__ can be used to create a heatmap plot of the overlap between MRS voxel masks across subjects in SPM152 space, expressed in relative Dice-Sorensen coefficients (0 - 100%). This can be useful for visualizing the consistency of voxel placement across subjects in a group analysis. 
+
+This function can be run once ``OspreySeg`` has been run for all subjects, and the output files have been saved in the ``derivatives/SegMaps`` folder. The function will automatically load all segmentation maps from this folder, calculate the overlap between the voxel masks, and create a heatmap plot of the overlap.
+
+.. figure:: img/helpers-plot-voxel-overlap.png
+
+   Example heatmap output from ``osp_plotVoxelOverlap``.
+
+Complete syntax
+---------------
+
+.. code-block:: matlab
+
+   > out = osp_plotVoxelOverlap(MRSCont, voxelCenter);
+
+Inputs
+^^^^^^
+
+.. list-table::
+   :header-rows: 1
+
+   * - Input
+     - Type
+     - Description
+     - Mandatory?
+   * - MRSCont
+     - struct
+     - Osprey MRS data container
+     - Yes
+   * - voxelCenter
+     - 3x1 double
+     - Voxel center coordinates
+     - No
+
+The optional ``voxelCenter`` input specifies the center coordinates to be used for the three plane image (optinal). If no coordinates are provided, the center of mass of all voxels is calculated to identify the center coordinates.
+
+Outputs
+^^^^^^^
+.. list-table::
+   :header-rows: 1
+
+   * - Output
+     - Type
+     - Description
+     - Mandatory?
+   * - out
+     - figure handle
+     - Figure handle for the output plot
+     - Yes
+
+After executing the function, Osprey will further generate new output files in ``VoxelMasks``: 1) a NIfTI file for each individual subject containing the voxel mask in SPM152 space (with the suffix ``_space-spm152_mask.nii.gz``), and 2) the Dice-Sorensen coefficient map in SPM152 space (with the suffix ``_space-spm152_mask_VoxelOverlap.nii.gz``). 
+
+Osprey basis set tools
+~~~~~~~~~~~~~~~~~~~~~~
 
 Being a linear-combination modelling software, **Osprey** requires prior
 spectral knowledge in the form of so-called *basis sets*. These are
@@ -41,22 +101,18 @@ it into **Osprey**. Assuming the basis set is located at
 ``/Users/Georg/LCModelBasissets/GE/press144``, you can execute the
 following command at the MATLAB prompt after you have run ``OspreyJob``:
 
+.. code-block:: matlab
 
+   > file = '/Users/Georg/LCModelBasissets/GE/press144';
 
-> file = '/Users/Georg/LCModelBasissets/GE/press144';
-
-You can then call **Osprey**\ ’s ``io_LCMBasis`` function to create a
+You can then call **Osprey**'s ``io_LCMBasis`` function to create a
 basis set:
 
+.. code-block:: matlab
 
+   > [BASIS] = io_LCMBasis(file, 1, 'unedited', 'none');
 
-> [BASIS] = io_LCMBasis(file, 1, 'unedited', 'none');
-
-Follow the instructions in the MATLAB prompt, and from then on,
-OspreyFit will automatically pick this basis set, but only if there is
-no internal existing **Osprey** basis set with matching parameters. We
-will soon provide the option to specify an individual basis set in the
-job file.
+Follow the instructions in the MATLAB prompt, and from then on, OspreyFit will automatically pick this basis set, but only if there is no internal existing **Osprey** basis set with matching parameters. We will soon provide the option to specify an individual basis set in the job file.
 
 fit_makeBasis
 -------------
@@ -72,20 +128,18 @@ look like this:
 In this case, we have simulated a bunch of metabolites for the GE PRESS
 sequence at an echo time of 144 ms.
 
-If this folder is located at, say,
-``/Users/Georg/MRS_Simulations/GE/press144``, you can create a variable
-called ``folder`` at the MATLAB prompt:
+If this folder is located at, say, ``/Users/Georg/MRS_Simulations/GE/press144``, you can create a variable called ``folder`` at the MATLAB prompt:
 
+.. code-block:: matlab
 
+   > folder = '/Users/Georg/MRS_Simulations/GE/press144';
 
-> folder = '/Users/Georg/MRS_Simulations/GE/press144';
-
-You can then call **Osprey**\ ’s ``fit_makeBasis`` function to create a
+You can then call **Osprey**'s ``fit_makeBasis`` function to create a
 basis set:
 
+.. code-block:: matlab
 
-
-> [BASIS] = fit_makeBasis(folder, 1, 'unedited');
+   > [BASIS] = fit_makeBasis(folder, 1, 'unedited');
 
 This will generate a struct array called ``BASIS`` in the MATLAB
 workspace, and also save it to the current MATLAB working directory.
@@ -95,68 +149,60 @@ going to be ``BASIS_MM.mat``; if it is set to ``0``, the filename will
 be ``BASIS_noMM.mat``.
 
 Complete syntax
-~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^
 
+.. code-block:: matlab
 
-
-> [BASIS] = fit_makeBasis(folder, addMMFlag, sequence, editTarget);
+   > [BASIS] = fit_makeBasis(folder, addMMFlag, sequence, editTarget);
 
 Inputs
 ^^^^^^
 
-+-------+-------+---------------------+-----------------+-------------+
-| Input | Type  | Description         | Mandatory?      | Options     |
-+=======+=======+=====================+=================+=============+
-| f     | S     | Complete path to    | Yes             | —           |
-| older | tring | the folder          |                 |             |
-|       |       | containing ``.MAT`` |                 |             |
-|       |       | files with          |                 |             |
-|       |       | FID-A-simulated     |                 |             |
-|       |       | metabolite basis    |                 |             |
-|       |       | functions           |                 |             |
-+-------+-------+---------------------+-----------------+-------------+
-| addM  | Bo    | If set to ``1``     | No              | ``1``       |
-| MFlag | olean | (default), Osprey   |                 | (default),  |
-|       |       | will automatically  |                 | ``0``       |
-|       |       | add macromolecule   |                 |             |
-|       |       | and lipid basis     |                 |             |
-|       |       | functions to the    |                 |             |
-|       |       | basis set           |                 |             |
-+-------+-------+---------------------+-----------------+-------------+
-| seq   | S     | Determines the type | No              | ``'         |
-| uence | tring | of sequence that    |                 | unedited'`` |
-|       |       | you want to create  |                 | (default),  |
-|       |       | a basis set for.    |                 | ``'MEGA'``, |
-|       |       | Will try to         |                 | ``          |
-|       |       | automatically       |                 | 'HERMES'``, |
-|       |       | determine the order |                 | ``'         |
-|       |       | of editing steps    |                 | HERCULES'`` |
-|       |       | from saturated NAA  |                 |             |
-|       |       | and water signals.  |                 |             |
-+-------+-------+---------------------+-----------------+-------------+
-| editT | S     | Determines the      | No              | ``'GABA'``  |
-| arget | tring | target molecule(s)  |                 | (default),  |
-|       |       | of the editing      |                 | ``'GSH'``   |
-|       |       | experiment. Only    |                 |             |
-|       |       | needs to be set if  |                 |             |
-|       |       | ``sequence`` is set |                 |             |
-|       |       | to something other  |                 |             |
-|       |       | than                |                 |             |
-|       |       | ``'unedited'``.     |                 |             |
-+-------+-------+---------------------+-----------------+-------------+
+.. list-table::
+   :header-rows: 1
+
+   * - Input
+     - Type
+     - Description
+     - Mandatory?
+     - Options
+   * - folder
+     - String
+     - Complete path to the folder containing ``.MAT`` files with FID-A-simulated metabolite basis functions
+     - Yes
+     - -
+   * - addMMFlag
+     - Boolean
+     - If set to ``1`` (default), Osprey will automatically add macromolecule and lipid basis functions to the basis set
+     - No
+     - ``1`` (default), ``0``
+   * - sequence
+     - String
+     - Determines the type of sequence that you want to create a basis set for. Will try to automatically determine the order of editing steps from saturated NAA and water signals.
+     - No
+     - ``'unedited'`` (default), ``'MEGA'``, ``'HERMES'``, ``'HERCULES'``
+   * - editTarget
+     - String
+     - Determines the target molecule(s) of the editing experiment. Only needs to be set if ``sequence`` is set to something other than ``'unedited'``.
+     - No
+     - ``'GABA'`` (default), ``'GSH'``
 
 Outputs
 ^^^^^^^
 
-+-------+-------+---------------------+-----------------+-------------+
-| O     | Type  | Description         | Mandatory?      | Options     |
-| utput |       |                     |                 |             |
-+=======+=======+=====================+=================+=============+
-| BASIS | S     | Structure           | Yes             | —           |
-|       | truct | containing the      |                 |             |
-|       |       | **Osprey** basis    |                 |             |
-|       |       | set.                |                 |             |
-+-------+-------+---------------------+-----------------+-------------+
+.. list-table::
+   :header-rows: 1
+
+   * - Output
+     - Type
+     - Description
+     - Mandatory?
+     - Options
+   * - BASIS
+     - Struct
+     - Structure containing the **Osprey** basis set.
+     - Yes
+     - -
 
 fit_plotBasis
 -------------
@@ -176,9 +222,9 @@ it, you will see the struct ``BASIS`` in the MATLAB workspace:
 You can then call ``fit_plotBasis`` to create a plot overview of the
 basis set:
 
+.. code-block:: matlab
 
-
-> fit_plotBasis(BASIS, 1, 1);
+   > fit_plotBasis(BASIS, 1, 1);
 
 This command will generate a stack plot of all basis functions
 (including macromolecules and lipids, if you have chosen to include them
@@ -191,80 +237,83 @@ in the basis set) along with a ppm axis:
 .. _complete-syntax-1:
 
 Complete syntax
-~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^
 
+.. code-block:: matlab
 
-
-> out = fit_plotBasis(basisSet, dim, stagFlag, ppmmin, ppmmax, xlab, ylab, figTitle);
+   > out = fit_plotBasis(basisSet, dim, stagFlag, ppmmin, ppmmax, xlab, ylab, figTitle);
 
 .. _inputs-1:
 
 Inputs
 ^^^^^^
 
-+-------+-------+---------------------+-----------------+-------------+
-| Input | Type  | Description         | Mandatory?      | Options     |
-+=======+=======+=====================+=================+=============+
-| bas   | S     | Name of the struct  | Yes             | —           |
-| isSet | tring | in the MATLAB       |                 |             |
-|       |       | workspace           |                 |             |
-|       |       | containing the      |                 |             |
-|       |       | Osprey basis set    |                 |             |
-|       |       | (usually ``BASIS``) |                 |             |
-+-------+-------+---------------------+-----------------+-------------+
-| dim   | In    | Dimension of the    | No              | Default:    |
-|       | teger | basis function that |                 | ``1``       |
-|       |       | you want to plot.   |                 |             |
-|       |       | For unedited data,  |                 |             |
-|       |       | this will be ``1``. |                 |             |
-|       |       | MEGA-edited data    |                 |             |
-|       |       | will have the       |                 |             |
-|       |       | ``off`` spectrum in |                 |             |
-|       |       | dimension 1, the    |                 |             |
-|       |       | ``on`` spectrum in  |                 |             |
-|       |       | dimension 2, the    |                 |             |
-|       |       | difference spectrum |                 |             |
-|       |       | in dimension 3, and |                 |             |
-|       |       | the sum spectrum in |                 |             |
-|       |       | dimension 4.        |                 |             |
-+-------+-------+---------------------+-----------------+-------------+
-| sta   | Bo    | Determines whether  | No              | ``1`` =     |
-| gFlag | olean | basis functions are |                 | staggered   |
-|       |       | plotted vertically  |                 | (default),  |
-|       |       | staggered or simply |                 | ``0`` (not  |
-|       |       | on top of one       |                 | staggered)  |
-|       |       | another.            |                 |             |
-+-------+-------+---------------------+-----------------+-------------+
-| p     | Float | Lower limit of ppm  | No              | Default:    |
-| pmmin |       | axis to plot.       |                 | ``0.2``     |
-+-------+-------+---------------------+-----------------+-------------+
-| p     | Float | Upper limit of ppm  | No              | Default:    |
-| pmmax |       | axis to plot.       |                 | ``5.2``     |
-+-------+-------+---------------------+-----------------+-------------+
-| xlab  | S     | X-axis label        | No              | Default:    |
-|       | tring |                     |                 | ``'Frequen  |
-|       |       |                     |                 | cy (ppm)'`` |
-+-------+-------+---------------------+-----------------+-------------+
-| ylab  | S     | Y-axis label        | No              | Default:    |
-|       | tring |                     |                 | ``''``      |
-+-------+-------+---------------------+-----------------+-------------+
-| fig   | S     | Figure title        | No              | Default:    |
-| Title | tring |                     |                 | ``''``      |
-+-------+-------+---------------------+-----------------+-------------+
+.. list-table::
+   :header-rows: 1
+
+   * - Input
+     - Type
+     - Description
+     - Mandatory?
+     - Options
+   * - basisSet
+     - String
+     - Name of the struct in the MATLAB workspace containing the Osprey basis set (usually ``BASIS``)
+     - Yes
+     - -
+   * - dim
+     - Integer
+     - Dimension of the basis function that you want to plot. For unedited data, this will be ``1``. MEGA-edited data will have the ``off`` spectrum in dimension 1, the ``on`` spectrum in dimension 2, the difference spectrum in dimension 3, and the sum spectrum in dimension 4.
+     - No
+     - Default: ``1``
+   * - stagFlag
+     - Boolean
+     - Determines whether basis functions are plotted vertically staggered or simply on top of one another.
+     - No
+     - ``1`` = staggered (default), ``0`` (not staggered)
+   * - ppmmin
+     - Float
+     - Lower limit of ppm axis to plot.
+     - No
+     - Default: ``0.2``
+   * - ppmmax
+     - Float
+     - Upper limit of ppm axis to plot.
+     - No
+     - Default: ``5.2``
+   * - xlab
+     - String
+     - X-axis label
+     - No
+     - Default: ``'Frequency (ppm)'``
+   * - ylab
+     - String
+     - Y-axis label
+     - No
+     - Default: ``''``
+   * - figTitle
+     - String
+     - Figure title
+     - No
+     - Default: ``''``
 
 .. _outputs-1:
 
 Outputs
 ^^^^^^^
 
-+-------+-------+---------------------+-----------------+-------------+
-| O     | Type  | Description         | Mandatory?      | Options     |
-| utput |       |                     |                 |             |
-+=======+=======+=====================+=================+=============+
-| out   | F     | Figure handle for   | Yes             | —           |
-|       | igure | the output figure   |                 |             |
-|       | h     |                     |                 |             |
-|       | andle |                     |                 |             |
-+-------+-------+---------------------+-----------------+-------------+
+.. list-table::
+   :header-rows: 1
+
+   * - Output
+     - Type
+     - Description
+     - Mandatory?
+     - Options
+   * - out
+     - Figure handle
+     - Figure handle for the output figure
+     - Yes
+     - -
 
 
